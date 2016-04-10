@@ -1,3 +1,5 @@
+<?php require_once("models/config.php"); ?>
+
 <nav class="navbar navbar-inverse navbar-fixed-top sticky">
 	<div class="container-fluid" id="navfluid">
 		<div class="navbar-header">
@@ -21,7 +23,7 @@
 				{					
 					echo "<li class='dropdown'>
 							<a href='#' class='dropdown-toggle' data-toggle='dropdown'>
-								<i class='fa fa-2x fa-user-secret'></i> 
+								<i class='fa fa-2x fa-rebel'></i> 
 								<b class='caret'></b>
 							</a>
 							<ul class='dropdown-menu'>
@@ -61,13 +63,33 @@
 							<li><a href='logout.php'>Logout</a></li>
 							</ul>
 							</li>";
-							echo "<li><a href='order.php'><i class='fa fa-2x fa-shopping-basket'></i></a></li>";
+							echo "<li><a href='menu.php'><i class='fa fa-2x fa-map'></i></a></li>";
+							echo "<li><a href='order.php'><i class='fa fa-2x fa-shopping-basket'>";
+							
+							if(isset($_SESSION['order']))
+							{
+								$order = unserialize($_SESSION['order']);
+								$count = $order->countItems();
+								echo " $count";
+							}	
+							
+							echo "</i></a></li>";
 				}							
 			}						
 			else
 			{				
-				echo "<li><a href='login.php'><i class='fa fa-2x fa-sign-in'></i></a></li>";				
-				echo "<li><a href='order.php'><i class='fa fa-2x fa-shopping-basket'></i></a></li>";
+				echo "<li><a href='login.php'><i class='fa fa-2x fa-sign-in'></i></a></li>";
+				echo "<li><a href='menu.php'><i class='fa fa-2x fa-map'></i></a></li>";				
+				echo "<li><a href='order.php'><i class='fa fa-2x fa-shopping-basket'>";
+				
+				if(isset($_SESSION['order']))
+				{
+					$order = unserialize($_SESSION['order']);
+					$count = $order->countItems();
+					echo " $count";
+				}				
+				
+				echo "</i></a></li>";
 			}
 		?>
 		</ul>        

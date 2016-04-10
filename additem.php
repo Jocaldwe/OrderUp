@@ -58,8 +58,8 @@ if(!empty($_POST))
 			
 		foreach($_POST['compitem'] as $count => $item)
 		{
-			$stmt = $pdo->prepare("INSERT INTO menuitemcomponent (itemid, componentid) VALUES (:itemid, :componentid)");
-			$stmt->execute(array("itemid" => $itemId, "componentid" => $item));
+			$stmt = $pdo->prepare("INSERT INTO menuitemcomponent (itemid, componentid, type) VALUES (:itemid, :componentid, :option)");
+			$stmt->execute(array("itemid" => $itemId, "componentid" => $item, "option" => $_POST['option'][$count]));
 		}
 	}		
 }
@@ -77,9 +77,14 @@ function addRow(frm)
 	list.attr("name", "compitem[]");
 	list.attr("id", "compitem");
 	
-	var row = "<tr class='items' id='rowNum"+rowNum+"'><td id='container"+rowNum+"'></td><td><input type='button' value='Remove' onclick='removeRow("+rowNum+");'></td></tr>";
+	var options = $("#itemoption").clone();
+	options.attr("name", "option[]");
+	options.attr("id", "itemoption");
+	
+	var row = "<tr class='items' id='rowNum"+rowNum+"'><td id='container"+rowNum+"'></td><td id='option"+rowNum+"'></td><td><input type='button' value='Remove' onclick='removeRow("+rowNum+");'></td></tr>";
 	$(row).insertAfter($("table tr.items:last"));
 	$("#container"+rowNum).append(list);
+	$("#option"+rowNum).append(options);
 }
 
 function removeRow(rnum)
@@ -126,7 +131,7 @@ function removeRow(rnum)
 			<hr />
 			<h3>Component Items</h3>
 			<table id="itemRows">
-			<tr><th>Item Description</th><th></th></tr>
+			<tr><th>Item Description</th><th>Option Type</th><th></th></tr>
 			
 			<tr class="items">
 				<td>
@@ -143,6 +148,13 @@ function removeRow(rnum)
 					?>
 					</select>
 				</td>
+				<td>
+					<select name="option[]" id="itemoption">
+						<option value="0">Required</option>
+						<option value="1">Suggested</option>
+						<option value="2">Optional</option>
+					</select>*
+				</td>
 				<td><input onclick="addRow(this.form);" type="button" value="Add Component Item" /></td>
 			
 			</tr>
@@ -151,6 +163,10 @@ function removeRow(rnum)
 			<label>&nbsp;</label>
 
 			<input type="submit" name="submit" value="Submit" />
+			<hr />
+			*<em>Required</em> components will be selected by default and cannot be removed by the user.<br />
+			 <em>Suggested</em> components will be selected by default and can be removed by the user.<br />
+			 <em>Optional</em> components will not be selected by default, but can be added or removed by the user.
 		</form>
 	</div>
 

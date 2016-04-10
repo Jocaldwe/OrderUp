@@ -13,6 +13,8 @@ echo "
 <script src='//code.jquery.com/jquery-migrate-1.2.1.min.js'></script>
 <script src='bootstrap/js/bootstrap.min.js'></script><script src='models/funcs.js' type='text/javascript'></script>
 
+<link rel='icon' type='image/png' href='models/site-templates/images/favicon.png' />
+
 <link href='".$template."' rel='stylesheet' type='text/css' />
 <link href='models/site-templates/carousel.css' rel='stylesheet' type='text/css' />
 <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>

@@ -41,6 +41,8 @@ require_once($language);
 require_once("class.mail.php");
 require_once("class.user.php");
 require_once("class.newuser.php");
+require_once("class.order.php");
+require_once("class.orderitem.php");
 require_once("funcs.php");
 
 session_start();

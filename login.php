@@ -71,8 +71,22 @@ if(!empty($_POST))
 					$loggedInUser->updateLastSignIn();
 					$_SESSION["userCakeUser"] = $loggedInUser;
 					
-					//Redirect to user account page
-					header("Location: account.php");
+					if(isset($_SESSION['order']))
+					{
+						$order = unserialize($_SESSION['order']);
+						$order->changeUser($loggedInUser->user_id);
+						$_SESSION['order'] = serialize($order);
+						
+					}
+					
+					if(isset($_GET['redirect']))
+					{
+						header("Location: order.php");
+					}
+					else
+					{
+						header("Location: account.php");
+					}
 					die();
 				}
 			}

@@ -1185,12 +1185,50 @@ function securePage($uri){
 function getCalorieCount($item)
 {
 	global $pdo;
-	$stmt = $pdo->prepare("SELECT SUM(caloriecount) as calories FROM componentitem WHERE componentitem.id IN (SELECT componentid FROM menuitemcomponent WHERE itemid = :item)");
+	$stmt = $pdo->prepare("SELECT SUM(caloriecount) as calories FROM componentitem WHERE componentitem.id IN (SELECT componentid FROM menuitemcomponent WHERE itemid = :item AND type != 2)");
 	$stmt->execute(array("item" => $item));
 	
 	$obj = $stmt->fetch(PDO::FETCH_OBJ);
 	
 	return $obj->calories;
+}
+
+function getItemInfo($item)
+{
+	global $pdo;
+	$stmt = $pdo->prepare("SELECT name, image FROM menuitem WHERE id =:id");
+	$stmt->execute(array("id" => $item));
+	
+	$obj = $stmt->fetch(PDO::FETCH_OBJ);
+	
+	return array("name" => $obj->name, "image" => $obj->image);
+}
+
+function getComponentName($component)
+{
+	global $pdo;
+	$stmt = $pdo->prepare("SELECT name FROM componentitem WHERE id= :id");
+	$stmt->execute(array("id" => $component));
+	
+	$obj = $stmt->fetch(PDO::FETCH_OBJ);
+	
+	return $obj->name;
+}
+
+function getSize($size)
+{
+	switch ($size)
+	{
+		case 0:
+			return "Small";
+			break;
+		case 1:
+			return "Medium";
+			break;
+		case 2:
+			return "Large";
+			break;
+	}
 }
 
 ?>
